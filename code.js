@@ -1,4 +1,4 @@
-```javascript
+```
 
 var gSQL = function() {
 
