@@ -78,7 +78,7 @@ In the case where you're creating multiples tables, ```SETTABLES``` accept one p
 It's important to note that each SETTABLES array refer to each Table. For example : 
 ```javascript 
 var SQL = new gSQL;
-SQL.CREATEDB("YOUR_DB_NAME").SETTABLES(["Table1","table2"]).SETTABLES(["HEADER_1","HEADER_2"],["HEADER_3","HEADER_4"]);
+SQL.CREATEDB("YOUR_DB_NAME").SETTABLES(["Table1","table2"]).SETTABLES([["HEADER_1","HEADER_2"],["HEADER_3","HEADER_4"]]);
 ```  
 where ```["HEADER_1","HEADER_2"]``` will refer to ```"Table1"``` and ```["HEADER_3","HEADER_4"]``` will refer to ```"table2"```
 
