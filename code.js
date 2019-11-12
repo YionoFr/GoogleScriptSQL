@@ -1,4 +1,5 @@
 ```javascript
+
 var gSQL = function() {
 
     var Db, Table, Argument, Meth, Data, OriginalData, DataJoin, Row, Col, DataToUpdate,InnerData,AndIn, ColTake1, ColTake2;
