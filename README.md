@@ -124,7 +124,7 @@ SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos")
 ***Note : DB and TABLE accept one parameter - string***
 
 
-## INSERT DATA
+## 3-INSERT DATA
 As any SQL DB, we want to insert some data in our tables. For that, we need to use the function ```INSERT```
 
 **Case where we want insert only one line of data**
@@ -166,5 +166,57 @@ SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").INSER
 ```
 And see now what we've got in our DB :
 ![screenshot-docs google com-2019 11 12-15_25_25](https://user-images.githubusercontent.com/47058511/68679712-b16e0c00-0560-11ea-8237-ece7cdde09c3.png)
+You can notice that the ID column is incremented by itself so you don't need to worry about it.
 
+***Note : If you want leave some column empty, don't remove them but just insert empty data as for exampe [data1, data2 ,"",data4,...]. If not, the data will not match with his header.***
 
+## 4-GET THE DATA
+
+### SELECT
+We'll be able to get the data which are in our table with the function ```SELECT```.
+
+```SELECT``` accept only one parameter who can be :
+
+**ALL**
+```javascript 
+function myFunction(){
+var SQL = new gSQL;
+SQL.DB("MY_DB_ID").TABLE("My_TABLE_NAME").SELECT("ALL").getVal()
+}
+```
+The parameter "ALL" will select the whole data into our table.
+
+**Single column**
+```javascript 
+function myFunction(){
+var SQL = new gSQL;
+SQL.DB("MY_DB_ID").TABLE("My_TABLE_NAME").SELECT("column_Name").getVal()
+}
+```
+If you need only one column of data, you'll need to put the header name as parameter
+
+**Multiple column**
+```javascript 
+function myFunction(){
+var SQL = new gSQL;
+SQL.DB("MY_DB_ID").TABLE("My_TABLE_NAME").SELECT(["column_Name1", "column_Name2",...]).getVal()
+}
+```
+If you need to get multiple column of data, the headers's name needs to be into an array.
+
+**Example with our previous case**
+```javascript 
+function myFunction(){
+var SQL = new gSQL;
+//The following will return us the whole data in our table as a 2D array
+//as : [[0,"Lenon","John","8 Hollywood Bd","0445879563","john.lenon@imastar.com"],[1,"Brown","James",...]]
+var allData = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").SELECT("ALL").getVal();
+
+//The following will return us the whole data for the column "name" so ["Lenon","Brown","West"]
+var oneColumn = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").SELECT("name").getVal();
+
+//The following will return us the whole data for the column "name" & the column "surname" so [["Lenon","John"],["Brown","James],[...]]
+var multipleColumn = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").SELECT(["name","surname"]).getVal();
+}
+```
+***Note : You can notice that after our ```SELECT``` function we've got the function ```getVal()```. Without it, you'll be not able to get any values back so don't forget it.***
