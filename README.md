@@ -312,3 +312,31 @@ var multipleColumn = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo")
 }
 ```
 
+## UPDATE THE DB
+
+### INSERT A NEW COLUMN
+Sometimes, you'll maybe need to add some column to your DB. For that, you'll need to use the function ```INSERTCOL``` : 
+```javascript
+var SQL = new gSQL;
+
+//For a single Column
+SQL.DB("MY_DB_ID").TABLE("MY_TABLE_NAME").INSERTCOL("NEW_COLUMN_NAME");
+
+//For multiple Column 
+SQL.DB("MY_DB_ID").TABLE("MY_TABLE_NAME").INSERTCOL(["NEW_COLUMN_NAME1","NEW_COLUMN_NAME2",...]);
+}
+```
+***Note : The column(s) will be added after your table's last column. There is no chance at the moment to insert them somewhere else.
+If you wish to add only one column, the ```INSERTCOL```'s parameter has to be a single string. If you wish to add multiple columns, then ```INSERTCOL``` parameter has to be an array of string.***
+
+So now let's say I would like to add two new columns to my previous example DB, let's call them "age" and "right" : 
+```javascript
+var SQL = new gSQL;
+SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").INSERTCOL(["age","right"]);
+}
+```
+This is now how my table is looking like : 
+![screenshot-docs google com-2019 11 12-17_29_19](https://user-images.githubusercontent.com/47058511/68690235-f9495f00-0571-11ea-837e-1b30d546a9c0.png)
+
+
+
