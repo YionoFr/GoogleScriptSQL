@@ -223,7 +223,7 @@ var multipleColumn = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("cu
 
 ### WHERE
 As in SQL, ```WHERE``` will help us to get more specific values.
-```
+```javascript
 function myFunction(){
 var SQL = new gSQL;
 SQL.DB("MY_DB_ID").TABLE("MY_TABLE_NAME").SELECT("ALL").WHERE("argument1","comparaison","argument2").getVal();
@@ -252,3 +252,63 @@ var multipleColumn = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo")
 ***Note : Comparaison sign accepted are only the following : ``` "=" - "!=" - ">" - "<" - "<=" - ">=" ```  and needs to be inside quote.***
 
 ***The first argument need to be a column header. Be careful because it's case sensitive. If your column header is "name", "Name" will not work. Same for the second argument, if the name is "West", "west" will not work either.***
+
+### AND
+It will help us to get more specific than ```WHERE``` but it works pretty the same.
+It must have 3 arguments : 
+```javascript
+function myFunction(){
+var SQL = new gSQL;
+SQL.DB("MY_DB_ID").TABLE("MY_TABLE_NAME").SELECT("ALL").WHERE("argument1","comparaison","argument2").AND("argument1","comparaison","argument2").getVal();
+}
+```
+It works exactly as ```WHERE``` except that the condition into ```WHERE``` and ```AND``` has both to match : 
+```javascript 
+function myFunction(){
+var SQL = new gSQL;
+//The following will return us  : [0,"Lenon","John","8 Hollywood Bd","0445879563","john.lenon@imastar.com"] as it's ID is 0.
+var allData = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").SELECT("ALL").WHERE("name","!=","West").AND("ID","=","0").getVal();
+
+//The following will return us : ["Lenon"] as his name is different than "West" and his ID is less than 1.
+// There, "Brown" is not showed because his ID is not < than 1.
+var oneColumn = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").SELECT("name").WHERE("name","!=","West").AND("ID","<","1").getVal();
+
+//The following will return us the whole data for the column "name" & the column "surname" so [["Lenon","John"],["Brown","James]] because their ID are less than 2 and their name are different than "West".
+var multipleColumn = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo")
+.TABLE("customers_infos")
+.SELECT(["name","surname"])
+.WHERE("ID","<=","2")
+.AND("name","!=","West").getVal();
+//You can translate the previous request as :  INTO THE DB "1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo" AND INTO THE TABLE "customers_infos", TAKE THE "name" AND THE "surname" WHERE THE "ID" IS LESS OR EQUAL THAN "3" AND WHERE THE "name" IS DIFFERENT THAN WEST
+}
+```
+
+### OR
+It's exactly the same than ```WHERE``` into his way to work and must have 3 arguments : 
+```javascript
+function myFunction(){
+var SQL = new gSQL;
+SQL.DB("MY_DB_ID").TABLE("MY_TABLE_NAME").SELECT("ALL").WHERE("argument1","comparaison","argument2").OR("argument1","comparaison","argument2").getVal();
+}
+```
+It is different than ``` AND ``` because it will return the value who match with the ``` WHERE ``` or the value who match with the ```OR``` : 
+```javascript 
+function myFunction(){
+var SQL = new gSQL;
+//The following will return us  : [[0,"Lenon","John","8 Hollywood Bd","0445879563","john.lenon@imastar.com"],["Brown","James",....]]
+// because Lenon's ID is less than 2 and because "Brown"'s mail is equal to brown.james@imastar.com
+var allData = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").SELECT("ALL").WHERE("mail","=","brown.james@imastar.com").OR("ID","<","2").getVal();
+
+//The following will return us : ["West","Brown"] because "West" name match with the WHERE and Brown ID match with the OR
+var oneColumn = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").SELECT("name").WHERE("name","=","West").OR("ID",">=","1").getVal();
+
+//The following will return us the whole data for the column "name" & the column "surname" so [["Lenon","John"],["Brown","James]] because Lenon match with the WHERE and BROWN match with the OR
+var multipleColumn = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo")
+.TABLE("customers_infos")
+.SELECT(["name","surname"])
+.WHERE("name","=","Lenon")
+.OR("name","=","Brown").getVal();
+//You can translate the previous request as :  INTO THE DB "1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo" AND INTO THE TABLE "customers_infos", TAKE THE "name" AND THE "surname" WHERE THE "name" EQUAL "Lenon" OR WHERE THE "name" EQUAL "Brown"
+}
+```
+
