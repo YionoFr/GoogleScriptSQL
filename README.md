@@ -8,4 +8,86 @@ var gSQL=function(){var e,t,n,r,a,h,s,i,u,o,p,f,g;function c(e,t,n){var r=functi
 ```
 
 into your GS file within App script before anything as below : 
-![screenshot-script google com-2019 11 12-12_56_40](https://user-images.githubusercontent.com/47058511/68670161-88438080-054c-11ea-8268-4e1f3d6814a7.png)
+![](https://user-images.githubusercontent.com/47058511/68670161-88438080-054c-11ea-8268-4e1f3d6814a7.png)
+
+## How to use the library?
+### Create a new instance of the object "gSQL"
+When you want to use the library into your code, you need to call it like this 
+```javascript 
+var SQL = new gSQL;
+```  
+Now we are ready to use the library, let's move forward!!
+
+### Creating a database, table(s) and rows headers 
+***Note : This library has been created to have chaining function.***
+#### CREATEDB
+When you want create a DB, it will create a Google Spreadsheet which will be used as a DB : 
+```javascript 
+var SQL = new gSQL;
+SQL.CREATEDB("YOUR_DB_NAME")
+```  
+``` CREATEDB```  accept only one parameter which has to be a string (Name of your DB)
+#### INFOLDER
+This is optional. You can choose where your Spreadsheet (DB) has to be stored in your Google Drive. To put your DB in a specific foler, use the following : 
+```javascript 
+var SQL = new gSQL
+SQL.CREATEDB("YOUR_DB_NAME").INFOLDER("YOUR_FOLDER_ID")
+``` 
+``` INFOLDER```  accept only one parameter: The ID of the folder (a string) where you want to create the DB in. 
+To find your folder ID, you can refer to this [article](https://ploi.io/documentation/mysql/where-do-i-get-google-drive-folder-id). 
+If you choose to create your DB without ```INFOLDER``` you can find your DB into your [Google Spreadsheet App](https://docs.google.com/spreadsheets/u/0/)
+
+#### SETTABLES
+When you are creating your(s) table(s), it will create one or multiple sheet in your Spreadsheet(DB).
+To create it, use the following : 
+
+**Single table**
+```javascript 
+var SQL = new gSQL;
+SQL.CREATEDB("YOUR_DB_NAME").SETTABLES("YOUR_TABLE_NAME")
+```  
+If you want to create only one table, ```SETTABLES``` accept one parameter which has to be a string (Your table name)
+
+**Multiple tables**
+```javascript 
+var SQL = new gSQL;
+SQL.CREATEDB("YOUR_DB_NAME").SETTABLES(["YOUR_TABLE_NAME_1","YOUR_TABLE_NAME_2",...])
+```  
+If you want to create multiple tables, ```SETTABLES``` accept one parameter which has to be an array of strings (Array of your tables names).
+
+#### SETCOLUMNS
+As any SQL DB, each table has to have some headers. You need to know that ***the first column will be automaticaly "ID"*** which is an auto increment. For the well working of the library, please **DO NOT DELETE IT AT ANY CASE**.
+
+**If you are creating only one table**
+It has to be as below : 
+```javascript 
+var SQL = new gSQL;
+SQL.CREATEDB("YOUR_DB_NAME").SETTABLES("YOUR_TABLE_NAME_1").SETTABLES(["HEADER_1","HEADER_2",...]);
+```  
+In the case where you're creating only one table, ```SETTABLES``` accept one parameter which has to be an array of strings (Array of your headers).
+
+**If you are creating multiple tables**
+It has to be as below : 
+```javascript 
+var SQL = new gSQL;
+SQL.CREATEDB("YOUR_DB_NAME").SETTABLES(["YOUR_TABLE_NAME_1","YOUR_TABLE_NAME_2",...]).SETTABLES([["HEADER_1","HEADER_2",...],["HEADER_1","HEADER_2",...]);
+```  
+In the case where you're creating multiples tables, ```SETTABLES``` accept one parameter which has to be an 2 dimensional array of strings ([Array of your headers],[Array of your headers]).
+It's important to note that each SETTABLES array refer to each Table. For example : 
+```javascript 
+var SQL = new gSQL;
+SQL.CREATEDB("YOUR_DB_NAME").SETTABLES(["Table1","table2"]).SETTABLES(["HEADER_1","HEADER_2"],["HEADER_3","HEADER_4"]);
+```  
+where ```["HEADER_1","HEADER_2"]``` will refer to ```"Table1"``` and ```["HEADER_3","HEADER_4"]``` will refer to ```"table2"```
+
+#### Example of case of using the previous functions
+We saw all function which will help us to create DB, Tables and Headers.
+Let's now have a look at one true example.
+I want create a DB where will be store some data around my customers.
+
+I'll have one DB called customers.
+I'll have two tables : One with my customer's infos and the second one with their order's infos.
+
+It will be structured as the following : 
+![screenshot-docs google com-2019 11 12-14_19_08](https://user-images.githubusercontent.com/47058511/68675094-73b8b580-0557-11ea-805c-bbbc2fd98246.png)
+   
