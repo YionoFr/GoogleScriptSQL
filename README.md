@@ -90,4 +90,12 @@ I'll have two tables : One with my customer's infos and the second one with thei
 
 It will be structured as the following : 
 ![screenshot-docs google com-2019 11 12-14_19_08](https://user-images.githubusercontent.com/47058511/68675094-73b8b580-0557-11ea-805c-bbbc2fd98246.png)
-   
+Then the function in Google script would be : 
+```javascript 
+function myFunction(){
+var SQL = new gSQL;
+SQL.CREATEDB("Customers").SETTABLES(["customers_infos","orders_infos"]).SETTABLES(["name","surname","adress","phone","mail"],["order_number","total_amount","customer_id"]);
+}
+```  
+Now, if you run the previous code, you should have the following : 
+![New Project (3) (1)](https://user-images.githubusercontent.com/47058511/68677141-d3b15b00-055b-11ea-8d3b-a32d654c911c.png)
