@@ -96,7 +96,7 @@ Then the function in Google script would be :
 ```javascript 
 function myFunction(){
 var SQL = new gSQL;
-SQL.CREATEDB("Customers").SETTABLES(["customers_infos","orders_infos"]).SETTABLES(["name","surname","adress","phone","mail"],["order_number","total_amount","customer_id"]);
+SQL.CREATEDB("Customers").SETTABLES(["customers_infos","orders_infos"]).SETCOLUMNS([["name","surname","adress","phone","mail"],["order_number","total_amount","customer_id"]]);
 }
 ```  
 Now, if you run the previous code, you should have the following : 
