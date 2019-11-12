@@ -1,4 +1,3 @@
-``` javascript
 
 var gSQL = function() {
 
@@ -491,4 +490,3 @@ return returnValues
     }
 }
 
-```
