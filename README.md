@@ -338,5 +338,57 @@ SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").INSER
 This is now how my table is looking like : 
 ![screenshot-docs google com-2019 11 12-17_29_19](https://user-images.githubusercontent.com/47058511/68690235-f9495f00-0571-11ea-837e-1b30d546a9c0.png)
 
+### UPDATE,VALUES,setVal()
+With these function above, we'll be able to update our DB.
+Let's see how it works ! 
+Update the whole data of one or multiple column : 
+```javascript
+var SQL = new gSQL;
+//Update one column 
+SQL.DB("DB_ID").TABLE("TABLE_NAME").UPDATE("COLUMN_NAME").VALUES("VALUE").setVal();
+
+//Update multiple column
+SQL.DB("DB_ID").TABLE("TABLE_NAME").UPDATE(["COLUMN_NAME1", "COLUMN_NAME2").VALUES(["VALUE_FOR_COLUMN1","VALUE_FOR_COLUMN2").setVal();
+}
+```
+Let's do it now with our previous example :  
+```javascript
+var SQL = new gSQL;
+//Update one column 
+SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").UPDATE("right").VALUES("0").setVal();
+```
+Now, our DB is looking like this : 
+![screenshot-docs google com-2019 11 12-18_06_25](https://user-images.githubusercontent.com/47058511/68693211-29473100-0577-11ea-9922-ed872c60df31.png)
+
+### UPDATE + WHERE
+You'll maybe need to update one particular value.
+So for that, you can use ```UPDATE``` with ```WHERE```
+```javascript
+var SQL = new gSQL;
+//Update one column 
+SQL.DB("DB_ID").TABLE("TABLE_NAME").UPDATE("COLUMN_NAME").WHERE("condition1', "comparator", "condition2").VALUES("VALUE").setVal();
+```
+Let's do it with our previous example : 
+```javascript
+var SQL = new gSQL;
+//Update the Lenon's age
+SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").UPDATE("age").WHERE("name","=","Lenon").VALUES("12").setVal();
+//Update the Brown's age
+SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").UPDATE("age").WHERE("name","=","Brown").VALUES("46").setVal();
+//Update the West's age
+SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").UPDATE("age").WHERE("name","=","West").VALUES("40").setVal();
+
+```
+Now, our DB is looking like this : 
+![screenshot-docs google com-2019 11 12-18_13_23](https://user-images.githubusercontent.com/47058511/68693760-21d45780-0578-11ea-8737-4ad2923524fb.png)
+Now let's say I would like to change right to "1" to every peoples's age > 18 and age < 42
+```javascript
+var SQL = new gSQL;
+//Update the West's age
+SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").UPDATE("right").WHERE("age",">","18").AND("age","<","42").VALUES("1").setVal();
+```
+There is our DB updated : 
+![screenshot-docs google com-2019 11 12-19_56_07](https://user-images.githubusercontent.com/47058511/68701329-d8d7cf80-0586-11ea-9010-061696d966be.png)
 
 
+So you can notice that even for update, ```AND``` and ```OR``` are working too !
