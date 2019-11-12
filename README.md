@@ -18,16 +18,16 @@ var SQL = new gSQL;
 ```  
 Now we are ready to use the library, let's move forward!!
 
-### Creating a database, table(s) and rows headers 
+## 1 - Creating a database, table(s) and rows headers 
 ***Note : This library has been created to have chaining function.***
-#### CREATEDB
+### CREATEDB
 When you want create a DB, it will create a Google Spreadsheet which will be used as a DB : 
 ```javascript 
 var SQL = new gSQL;
 SQL.CREATEDB("YOUR_DB_NAME")
 ```  
 ``` CREATEDB```  accept only one parameter which has to be a string (Name of your DB)
-#### INFOLDER
+### INFOLDER
 This is optional. You can choose where your Spreadsheet (DB) has to be stored in your Google Drive. To put your DB in a specific foler, use the following : 
 ```javascript 
 var SQL = new gSQL
@@ -37,7 +37,7 @@ SQL.CREATEDB("YOUR_DB_NAME").INFOLDER("YOUR_FOLDER_ID")
 To find your folder ID, you can refer to this [article](https://ploi.io/documentation/mysql/where-do-i-get-google-drive-folder-id). 
 If you choose to create your DB without ```INFOLDER``` you can find your DB into your [Google Spreadsheet App](https://docs.google.com/spreadsheets/u/0/)
 
-#### SETTABLES
+### SETTABLES
 When you are creating your(s) table(s), it will create one or multiple sheet in your Spreadsheet(DB).
 To create it, use the following : 
 
@@ -55,10 +55,11 @@ SQL.CREATEDB("YOUR_DB_NAME").SETTABLES(["YOUR_TABLE_NAME_1","YOUR_TABLE_NAME_2",
 ```  
 If you want to create multiple tables, ```SETTABLES``` accept one parameter which has to be an array of strings (Array of your tables names).
 
-#### SETCOLUMNS
+### SETCOLUMNS
 As any SQL DB, each table has to have some headers. You need to know that ***the first column will be automaticaly "ID"*** which is an auto increment. For the well working of the library, please **DO NOT DELETE IT AT ANY CASE**.
 
 **If you are creating only one table**
+
 It has to be as below : 
 ```javascript 
 var SQL = new gSQL;
@@ -67,6 +68,7 @@ SQL.CREATEDB("YOUR_DB_NAME").SETTABLES("YOUR_TABLE_NAME_1").SETTABLES(["HEADER_1
 In the case where you're creating only one table, ```SETTABLES``` accept one parameter which has to be an array of strings (Array of your headers).
 
 **If you are creating multiple tables**
+
 It has to be as below : 
 ```javascript 
 var SQL = new gSQL;
@@ -80,10 +82,10 @@ SQL.CREATEDB("YOUR_DB_NAME").SETTABLES(["Table1","table2"]).SETTABLES(["HEADER_1
 ```  
 where ```["HEADER_1","HEADER_2"]``` will refer to ```"Table1"``` and ```["HEADER_3","HEADER_4"]``` will refer to ```"table2"```
 
-#### Example of case of using the previous functions
-We saw all function which will help us to create DB, Tables and Headers.
+### Example of using the previous functions
+We saw all functions which will help us to create DB, Tables and Headers.
 Let's now have a look at one true example.
-I want create a DB where will be store some data around my customers.
+I want create a DB where will be stored some data around my customers.
 
 I'll have one DB called customers.
 I'll have two tables : One with my customer's infos and the second one with their order's infos.
@@ -99,3 +101,70 @@ SQL.CREATEDB("Customers").SETTABLES(["customers_infos","orders_infos"]).SETTABLE
 ```  
 Now, if you run the previous code, you should have the following : 
 ![New Project (3) (1)](https://user-images.githubusercontent.com/47058511/68677141-d3b15b00-055b-11ea-8d3b-a32d654c911c.png)
+
+## 2 - USING DB AND TABLE
+In the following section, we'll see how to insert, read, update and delete the data into our DB.
+Every request need to start like this 
+```javascript 
+function myFunction(){
+var SQL = new gSQL;
+SQL.DB("YOUR_DB_ID").TABLE("YOUR_TABLE_ID")
+}
+```  
+where ```"YOUR_DB_ID"``` has to be replaced by the ID of your DB (which is the ID of your spreadsheet) and "YOUR_TABLE_ID" has to be replaced by the name of your table (which is your sheet name).
+
+Using my previous example, if I want to work in my DB "Customers" and my table "customers_infos", I'll need to use the following code : 
+```javascript 
+function myFunction(){
+var SQL = new gSQL;
+/* "1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo" is my Spredsheet ID and "customers_infos" my sheet name*/
+SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos")
+}
+```
+***Note : DB and TABLE accept one parameter - string***
+
+
+## INSERT DATA
+As any SQL DB, we want to insert some data in our tables. For that, we need to use the function ```INSERT```
+
+**Case where we want insert only one line of data**
+
+If we just want to insert one line of data into our DB, we need to use the following: 
+```javascript 
+function myFunction(){
+var SQL = new gSQL;
+SQL.DB("MY_DB_ID").TABLE("MY_TABLE_NAME").INSERT(["value1","value2",....])
+}
+```
+```INSERT``` accept only one parameter which is an Array of string (Array of data).
+With my previous example : 
+```javascript 
+function myFunction(){
+var SQL = new gSQL;
+SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").INSERT(["Lenon","John","8 Hollywood Bd", "0445879563","john.lenon@imastar.com"]);
+}
+```
+And see now what we've got in our DB : 
+![screenshot-docs google com-2019 11 12-15_14_39](https://user-images.githubusercontent.com/47058511/68678908-293b3700-055f-11ea-9b31-491bbbc1e590.png)
+
+**Case where we want insert multiple line of data**
+
+If we want to insert multiple line of data into our table, we need to use the following :
+```javascript
+function myFunction(){
+var SQL = new gSQL;
+SQL.DB("MY_DB_ID").TABLE("MY_TABLE_NAME").INSERT([["LINE_1_VALUE1","LINE_2_VALUE2",....],["LINE_2_VALUE1","LINE_2_VALUE2",...]]);
+}
+```
+```INSERT``` accept only one parameter which also can be a 2 dimensional array of string ([[Array of value],[Array of value]]).
+With my previous example :
+```javascript 
+function myFunction(){
+var SQL = new gSQL;
+SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").INSERT([["Brown","James","6 famous place", "987654321","brown.james@imastar.com"], ["West", "Kanye", "Somewhere in LA", "123456789","Kanye.west@music.com"]]);
+}
+```
+And see now what we've got in our DB :
+![screenshot-docs google com-2019 11 12-15_25_25](https://user-images.githubusercontent.com/47058511/68679712-b16e0c00-0560-11ea-8237-ece7cdde09c3.png)
+
+
