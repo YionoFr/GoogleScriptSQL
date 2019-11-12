@@ -220,3 +220,35 @@ var multipleColumn = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("cu
 }
 ```
 ***Note : You can notice that after our ```SELECT``` function we've got the function ```getVal()```. Without it, you'll be not able to get any values back so don't forget it.***
+
+### WHERE
+As in SQL, ```WHERE``` will help us to get more specific values.
+```
+function myFunction(){
+var SQL = new gSQL;
+SQL.DB("MY_DB_ID").TABLE("MY_TABLE_NAME").SELECT("ALL").WHERE("argument1","comparaison","argument2").getVal();
+}
+```
+As you can see, ```WHERE``` has to have 3 arguments which **MUST** be into quote.
+
+**Example with our previous case**
+```javascript 
+function myFunction(){
+var SQL = new gSQL;
+//The following will return us  : [0,"Lenon","John","8 Hollywood Bd","0445879563","john.lenon@imastar.com"] as it's ID is 0.
+var allData = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").SELECT("ALL").WHERE("ID","=","0").getVal();
+
+//The following will return us : ["Lenon","Brown"] as they are different than "West".
+var oneColumn = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").SELECT("name").WHERE("name","!=","West").getVal();
+
+//The following will return us the whole data for the column "name" & the column "surname" so [["Lenon","John"],["Brown","James]] because their ID are less than 2.
+var multipleColumn = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo")
+.TABLE("customers_infos")
+.SELECT(["name","surname"])
+.WHERE("ID","<","2").getVal();
+//You can translate the previous request as :  INTO THE DB "1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo" AND INTO THE TABLE "customers_infos", TAKE THE "name" AND THE "surname" WHERE THE "ID" IS LESS THAN "2"
+}
+```
+***Note : Comparaison sign accepted are only the following : ``` "=" - "!=" - ">" - "<" - "<=" - ">=" ```  and needs to be inside quote.***
+
+***The first argument need to be a column header. Be careful because it's case sensitive. If your column header is "name", "Name" will not work. Same for the second argument, if the name is "West", "west" will not work either.***
