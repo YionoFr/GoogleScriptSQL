@@ -312,7 +312,7 @@ var multipleColumn = SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo")
 }
 ```
 
-## UPDATE THE DB
+## 5-UPDATE THE DB
 
 ### INSERT A NEW COLUMN
 Sometimes, you'll maybe need to add some column to your DB. For that, you'll need to use the function ```INSERTCOL``` : 
@@ -389,6 +389,99 @@ SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").UPDAT
 ```
 There is our DB updated : 
 ![screenshot-docs google com-2019 11 12-19_56_07](https://user-images.githubusercontent.com/47058511/68701329-d8d7cf80-0586-11ea-9010-061696d966be.png)
-
-
 So you can notice that even for update, ```AND``` and ```OR``` are working too !
+
+## 6-JOINWHERE
+The idea behind it is to be able to join the values of two tables.
+I'll explain how to do it and show you a true example to get it easily.
+
+```javascript
+var SQL = new gSQL;
+SQL.DB("DB_ID").TABLE("TABLE_NAME").TAKE("COLUMN").ANDIN.("TABLE_NAME").TAKE("COLUMN").JOINWHERE("col_table_1","comparator","col_table_2");
+```
+The function ```TAKE``` is pretty much the same than the function ```SELECT``` then it accept one parameter who can be : 
+- "1Column" if you want get only one column
+- ["Col1", "Col2",...] if you want to get multiple column.
+
+Let's have a look with our previous example.
+So we have two table : 
+- Table 1 with our customer's infos
+![screenshot-docs google com-2019 11 13-09_15_20](https://user-images.githubusercontent.com/47058511/68745024-23446500-05f6-11ea-873f-3f7c3cdddfb5.png)
+- Table 2 with customer's orders infos : 
+
+![screenshot-docs google com-2019 11 13-09_16_56](https://user-images.githubusercontent.com/47058511/68745129-5b4ba800-05f6-11ea-8405-b5d7492ea5fe.png)
+
+You can notice than in our second table, there is a column called "customer_id". This column is using to join both table.
+In the first line, the customer's id is 0 which means that is the customer with the id 0 in our customers's table who belongs this order.
+In the second line, the customer's id is 1 which means that is the customer with the id 1 in our customers's table who belongs this order
+
+Etc...
+
+Now let's have a look how it works
+```javascript
+//Get the name and the surname in table 1, get the order_number and the total_amount in the table number 2 and join these infos
+// where ID match with customer_id
+SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").TAKE(["name","surname"])
+.ANDIN("orders_infos").TAKE(["order_number","total_amount"]).JOINWHERE("ID","=","customer_id");
+```
+For this example, our return values will be 
+```
+[[Lenon, John, 51.0, 160.0], [Lenon, John, 55.0, 33.0], [Brown, James, 52.0, 210.0], [Brown, James, 53.0, 98.0], [West, Kanye, 54.0, 27.0]]
+```
+I could replace ```TAKE(["name","surname"])``` by ```TAKE("name")``` and replace ```TAKE(["order_number","total_amount"])``` by ```TAKE("total_amount")``` and it will work too.
+***Note : The Keyword "ALL" is not working with ```TAKE```***
+
+## 7-DELETE
+
+It happens that we want to delete a line, a column, a table or even a DB.
+For these tasks, there is different functions.
+
+### DELETEWHERE
+Quiet the same than ```WHERE```, it will delete the line who match with these conditions : 
+```javascript
+//Update one column 
+SQL.DB("DB_ID").TABLE("TABLE_NAME").DELETEWHERE("condition1", "comparator", "condition2");
+```
+Let's do it with our previous example : 
+```javascript
+//DELETE the Kanye West line line
+SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").DELETEWHERE("age","=","40");
+```
+Below the table after deleting the KW's line :
+![screenshot-docs google com-2019 11 12-20_15_15](https://user-images.githubusercontent.com/47058511/68702464-28b79600-0589-11ea-91f4-46cfa0c9406d.png)
+
+### TRUNCATE
+If you need to empty the whole table but want to keep the headers, you can use this function.
+```javascript
+SQL.DB("DB_ID").TABLE("TABLE_NAME").TRUNCATE();
+```
+See below with our previous example : 
+```javascript
+//Empty the whole data but keep the headers
+SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").TRUNCATE();
+```
+The table after using the function ```TRUNCATE```
+![screenshot-docs google com-2019 11 12-20_19_50](https://user-images.githubusercontent.com/47058511/68702851-cb701480-0589-11ea-9240-6780831b3946.png)
+
+### DROPTABLE
+If you need to remove a table, you can use the function ```DROPTABLE```
+```javascript
+SQL.DB("DB_ID").TABLE("TABLE_NAME").DROPTABLE();
+```
+With our previous example : 
+```javascript
+//Remove the table "customer_infos"
+SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").TABLE("customers_infos").DROPTABLE();
+```
+
+### DROPDB
+If you need to delete a DB, you can use this function.
+```javascript
+//Remove the DB "Customers"
+SQL.DB("DB_ID").DROPDB();
+```
+With our previous example : 
+```javascript
+//Remove the DB "Customers"
+SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").DROPDB();
+```
