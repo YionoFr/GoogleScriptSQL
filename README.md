@@ -485,3 +485,9 @@ With our previous example :
 //Remove the DB "Customers"
 SQL.DB("1VcdfCyvyy8_RD67ji_GjtRXVUqIuX9abpO_oIo").DROPDB();
 ```
+## NOTE
+I hope this doc is clear for everyone. If you got any question or any comments, you can contact us throug kevin@academy-numerique.com.
+
+I wish this library will help some of you and make your work easier through Google app script.
+
+More tutorial video will follow as soon is possible, it will help to get a better understanding.
