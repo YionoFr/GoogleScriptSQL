@@ -94,13 +94,13 @@ In the case where you're creating only one table, ```SETTABLES``` accept one par
 It has to be as below : 
 ```javascript 
 var SQL = new gSQL;
-SQL.CREATEDB("YOUR_DB_NAME").SETTABLES(["YOUR_TABLE_NAME_1","YOUR_TABLE_NAME_2",...]).SETTABLES([["HEADER_1","HEADER_2",...],["HEADER_1","HEADER_2",...]);
+SQL.CREATEDB("YOUR_DB_NAME").SETTABLES(["YOUR_TABLE_NAME_1","YOUR_TABLE_NAME_2",...]).SETCOLUMNS([["HEADER_1","HEADER_2",...],["HEADER_1","HEADER_2",...]);
 ```  
 In the case where you're creating multiples tables, ```SETTABLES``` accept one parameter which has to be an 2 dimensional array of strings ([Array of your headers],[Array of your headers]).
 It's important to note that each SETTABLES array refer to each Table. For example : 
 ```javascript 
 var SQL = new gSQL;
-SQL.CREATEDB("YOUR_DB_NAME").SETTABLES(["Table1","table2"]).SETTABLES([["HEADER_1","HEADER_2"],["HEADER_3","HEADER_4"]]);
+SQL.CREATEDB("YOUR_DB_NAME").SETTABLES(["Table1","table2"]).SETCOLUMNS([["HEADER_1","HEADER_2"],["HEADER_3","HEADER_4"]]);
 ```  
 where ```["HEADER_1","HEADER_2"]``` will refer to ```"Table1"``` and ```["HEADER_3","HEADER_4"]``` will refer to ```"table2"```
 
