@@ -420,7 +420,7 @@ I'll explain how to do it and show you a true example to get it easily.
 
 ```javascript
 var SQL = new gSQL;
-SQL.DB("DB_ID").TABLE("TABLE_NAME").TAKE("COLUMN").ANDIN.("TABLE_NAME").TAKE("COLUMN").JOINWHERE("col_table_1","comparator","col_table_2");
+SQL.DB("DB_ID").TABLE("TABLE_NAME").TAKE("COLUMN").ANDIN("TABLE_NAME").TAKE("COLUMN").JOINWHERE("col_table_1","comparator","col_table_2");
 ```
 The function ```TAKE``` is pretty much the same than the function ```SELECT``` then it accept one parameter who can be : 
 - "1Column" if you want get only one column
