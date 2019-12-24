@@ -3,7 +3,7 @@ This library has been created to help people which have the desire using Google 
 
 English docs : https://docs.yiono.fr/
 
-Live demo : https://docs.yiono.fr/webapp-googleappsscript-example
+Live demo : https://docs.yiono.fr/webapp-google-apps-script-example
 
 Link to the demos's source code : https://bit.ly/2ZkF5Mp
 
